@@ -5,16 +5,18 @@ import GeneratedBracket from "./components/GeneratedBracket";
 import Typography from "@material-ui/core/Typography";
 
 const BracketBase = () => {
-  // TODO: Switch to playersArray
-  const [numberOfPlayers, setNumPlayers] = React.useState(0);
+  const [playersArray, setPlayersArray] = React.useState([]);
+  
   return (
     <div>
       <Typography variant="h3">Bracket App</Typography>
       <RibbonTop
-        numberOfPlayers={numberOfPlayers}
-        setNumPlayers={setNumPlayers}
+        setPlayersArray={setPlayersArray}
+        playersArray={playersArray}
       />
-      <GeneratedBracket numPlayers={numberOfPlayers} />
+      <GeneratedBracket 
+        players={playersArray}
+      />
     </div>
   );
 };

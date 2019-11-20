@@ -1,15 +1,14 @@
 import React from "react";
 import Input from "@material-ui/core/Input";
 
-const RibbonTop = ({ numberOfPlayers, setNumPlayers }) => {
-  // TODO: pass these up to the "BrackBase" level in the structure so that we have access to these vars
-  const [playersArray, setPlayersArray] = React.useState([]);
-
+const RibbonTop = ({ setPlayersArray, playersArray }) => {
+  const [numberOfPlayers, setNumPlayers] = React.useState(0);
   const onInputChange = event => {
     if (
       event &&
       event.target &&
       event.target.value &&
+      event.target.value.length <= 3 &&
       Number.isInteger(parseInt(event.target.value), 10)
     ) {
       setNumPlayers(event.target.value);
