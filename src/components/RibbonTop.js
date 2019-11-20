@@ -1,8 +1,20 @@
 import React from "react";
-import Input from "@material-ui/core/Input";
+import TextField from "@material-ui/core/TextField";
+import { withStyles } from "@material-ui/core/styles";
 
-const RibbonTop = ({ setPlayersArray, playersArray }) => {
+const styles = {
+  input: {
+    margin: "5px"
+  },
+  ribbon: {
+    width: "25%",
+    maxWidth: "250px"
+  }
+};
+
+const RibbonTop = ({ setPlayersArray, playersArray, classes }) => {
   const [numberOfPlayers, setNumPlayers] = React.useState(0);
+
   const onInputChange = event => {
     if (
       event &&
@@ -12,7 +24,7 @@ const RibbonTop = ({ setPlayersArray, playersArray }) => {
       Number.isInteger(parseInt(event.target.value), 10)
     ) {
       setNumPlayers(event.target.value);
-      setPlayersArray(new Array(event.target.value));
+      setPlayersArray(new Array(parseInt(event.target.value, 10)));
     } else {
       setNumPlayers(0);
     }
@@ -28,14 +40,23 @@ const RibbonTop = ({ setPlayersArray, playersArray }) => {
   };
 
   return (
-    <div>
+    <div className={classes.ribbon}>
       {/* TODO add warning if a non number is inputed */}
-      <Input onChange={onInputChange} />
+      <TextField
+        label="Number of Players"
+        className={classes.input}
+        onChange={onInputChange}
+      />
       {[...Array(parseInt(numberOfPlayers, 10) || 0).keys()].map(key => (
-        <Input key={key} onChange={event => onNameInput(event, key)} />
+        <TextField
+          label={`Player ${key + 1}`}
+          className={classes.input}
+          key={key}
+          onChange={event => onNameInput(event, key)}
+        />
       ))}
     </div>
   );
 };
 
-export default RibbonTop;
+export default withStyles(styles)(RibbonTop);
