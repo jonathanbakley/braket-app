@@ -34,7 +34,8 @@ const RibbonTop = ({ setPlayersArray, playersArray, classes }) => {
     playersArray[key] = {
       id: key,
       name: event.target.value,
-      wins: 0
+      wins: 0,
+      stage: 0
     };
     setPlayersArray(playersArray);
   };

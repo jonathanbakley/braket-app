@@ -3,6 +3,9 @@
  * @param {int} totalPlayers
  */
 function getBracketLayout(totalPlayers) {
+  if (totalPlayers <= 1) {
+    return [];
+  }
   let bracketLayout = [0, 1];
 
   for (var i = 2; i < totalPlayers; i++) {
