@@ -23,7 +23,10 @@ const BracketBase = ({ classes }) => {
           setPlayersArray={setPlayersArray}
           playersArray={playersArray}
         />
-        <GeneratedBracket players={playersArray} />
+        <GeneratedBracket
+          players={playersArray}
+          setPlayersArray={setPlayersArray}
+        />
       </div>
     </div>
   );

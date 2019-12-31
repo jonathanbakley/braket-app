@@ -20,7 +20,14 @@ const styles = {
   }
 };
 
-const BracketItem = ({ classes, playerX, playerY, bestOf }) => {
+const BracketItem = ({
+  classes,
+  playerX,
+  playerY,
+  bestOf,
+  updatePlayerWins,
+  key
+}) => {
   // TODO: This state will likely need to be made more global
   let [[winsX, winsY], updateWins] = useState([0, 0]);
   let [buttonsDisabled, checkWin] = useState(false);
@@ -28,33 +35,34 @@ const BracketItem = ({ classes, playerX, playerY, bestOf }) => {
   useEffect(() => {
     const xWon = winsX >= Math.ceil(bestOf / 2);
     const yWon = winsY >= Math.ceil(bestOf / 2);
-    console.log("X Wins:", xWon, "Y Wins", yWon);
     if (xWon || yWon) {
       checkWin(true);
     }
   }, [bestOf, winsX, winsY]);
 
   const changeWins = (event, player) => {
+    const text = event.target.textContent;
     if (player === "x") {
       updateWins(
-        event.target.textContent === "+"
+        text === "+"
           ? [winsX + 1, winsY]
           : [winsX > 0 ? winsX - 1 : winsX, winsY]
       );
-      console.log(winsX);
+      updatePlayerWins(playerX, text);
     } else {
       updateWins(
-        event.target.textContent === "+"
+        text === "+"
           ? [winsX, winsY + 1]
           : [winsX, winsY > 0 ? winsY - 1 : winsY]
       );
+      updatePlayerWins(playerY, text);
     }
   };
   return (
     <Table>
       <TableBody>
         <TableRow>
-          <TableCell>{playerX}</TableCell>
+          <TableCell>{playerX.name}</TableCell>
           <TableCell
             className={classNames({
               [classes.winner]: winsX >= Math.ceil(bestOf / 2)
@@ -64,13 +72,13 @@ const BracketItem = ({ classes, playerX, playerY, bestOf }) => {
           </TableCell>
           <TableCell className={classes.buttons}>
             <Button
-              disabled={buttonsDisabled}
+              disabled={buttonsDisabled || playerX.name === ""}
               onClick={e => changeWins(e, "x")}
             >
               +
             </Button>
             <Button
-              disabled={buttonsDisabled || winsX === 0}
+              disabled={buttonsDisabled || winsX === 0 || playerX.name === ""}
               onClick={e => changeWins(e, "x")}
             >
               -
@@ -78,7 +86,7 @@ const BracketItem = ({ classes, playerX, playerY, bestOf }) => {
           </TableCell>
         </TableRow>
         <TableRow>
-          <TableCell>{playerY}</TableCell>
+          <TableCell>{playerY.name}</TableCell>
           <TableCell
             className={classNames({
               [classes.winner]: winsY >= Math.ceil(bestOf / 2)
@@ -88,13 +96,13 @@ const BracketItem = ({ classes, playerX, playerY, bestOf }) => {
           </TableCell>
           <TableCell className={classes.buttons}>
             <Button
-              disabled={buttonsDisabled}
+              disabled={buttonsDisabled || playerY.name === ""}
               onClick={e => changeWins(e, "y")}
             >
               +
             </Button>
             <Button
-              disabled={buttonsDisabled || winsY === 0}
+              disabled={buttonsDisabled || winsY === 0 || playerY.name === ""}
               onClick={e => changeWins(e, "y")}
             >
               -
@@ -110,8 +118,8 @@ BracketItem.propTypes = {
   classes: PropTypes.shape({
     buttons: PropTypes.string
   }),
-  playerX: PropTypes.string,
-  playerY: PropTypes.string,
+  // playerX: PropTypes.object,
+  // playerY: PropTypes.object,
   bestOf: PropTypes.number
 };
 

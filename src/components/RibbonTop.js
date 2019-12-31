@@ -24,20 +24,23 @@ const RibbonTop = ({ setPlayersArray, playersArray, classes }) => {
       Number.isInteger(parseInt(event.target.value), 10)
     ) {
       setNumPlayers(event.target.value);
-      setPlayersArray(new Array(parseInt(event.target.value, 10)));
+      // setPlayersArray(new Array(parseInt(event.target.value, 10)));
+      const playersArrayBuilder = [...Array(parseInt(event.target.value, 10))];
+      const newPlayersArray = playersArrayBuilder.map((player, key) => ({
+        id: key,
+        name: "",
+        wins: 0,
+        stage: 0
+      }));
+      setPlayersArray(newPlayersArray);
     } else {
       setNumPlayers(0);
     }
   };
 
   const onNameInput = (event, key) => {
-    playersArray[key] = {
-      id: key,
-      name: event.target.value,
-      wins: 0,
-      stage: 0
-    };
-    setPlayersArray(playersArray);
+    playersArray[key].name = event.target.value;
+    setPlayersArray([...playersArray]);
   };
 
   return (
