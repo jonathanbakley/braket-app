@@ -3,7 +3,6 @@ import BracketItem from "./BracketItem";
 import getBraketLayout from "../helpers/getBracketLayout";
 import { withStyles } from "@material-ui/styles";
 
-// TODO: Add styles - make sure rows for each round are in a column
 const styles = {
   columns: {
     display: "flex",
@@ -15,12 +14,8 @@ const styles = {
 };
 
 // TODO: Arrows from one bracket to the other
-// TODO: add players into each bracket name
-// TODO: make sure players move on to correct round as they win
 
-const GeneratedBracket = ({ players, setPlayersArray, classes }) => {
-  const bestOf = 3;
-
+const GeneratedBracket = ({ players, setPlayersArray, bestOf, classes }) => {
   useEffect(() => {
     setPlayersArray(players);
   }, [players, setPlayersArray]);

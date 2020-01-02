@@ -7,16 +7,26 @@ import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
 import Button from "@material-ui/core/Button";
 import { withStyles } from "@material-ui/styles";
+import { withTheme } from "@material-ui/core/styles";
 import TableBody from "@material-ui/core/TableBody";
 
 // TODO - add more styles
 const styles = {
   buttons: {
     display: "flex",
-    flexDirection: "column"
+    flexDirection: "column",
+    padding: "0px"
   },
   winner: {
-    backgroundColor: "green"
+    backgroundColor: "#a9a9a9",
+    borderRadius: "3px"
+  },
+  entireTable: {
+    padding: "15px",
+    borderCollapse: "separate"
+  },
+  button: {
+    padding: "0px"
   }
 };
 
@@ -59,51 +69,51 @@ const BracketItem = ({
     }
   };
   return (
-    <Table>
+    <Table className={classes.entireTable}>
       <TableBody>
-        <TableRow>
+        <TableRow
+          className={classNames({
+            [classes.winner]: winsX >= Math.ceil(bestOf / 2)
+          })}
+        >
           <TableCell>{playerX.name}</TableCell>
-          <TableCell
-            className={classNames({
-              [classes.winner]: winsX >= Math.ceil(bestOf / 2)
-            })}
-          >
-            {winsX}
-          </TableCell>
+          <TableCell>{winsX}</TableCell>
           <TableCell className={classes.buttons}>
             <Button
               disabled={buttonsDisabled || playerX.name === ""}
               onClick={e => changeWins(e, "x")}
+              className={classes.button}
             >
               +
             </Button>
             <Button
               disabled={buttonsDisabled || winsX === 0 || playerX.name === ""}
               onClick={e => changeWins(e, "x")}
+              className={classes.button}
             >
               -
             </Button>
           </TableCell>
         </TableRow>
-        <TableRow>
+        <TableRow
+          className={classNames({
+            [classes.winner]: winsY >= Math.ceil(bestOf / 2)
+          })}
+        >
           <TableCell>{playerY.name}</TableCell>
-          <TableCell
-            className={classNames({
-              [classes.winner]: winsY >= Math.ceil(bestOf / 2)
-            })}
-          >
-            {winsY}
-          </TableCell>
+          <TableCell>{winsY}</TableCell>
           <TableCell className={classes.buttons}>
             <Button
               disabled={buttonsDisabled || playerY.name === ""}
               onClick={e => changeWins(e, "y")}
+              className={classes.button}
             >
               +
             </Button>
             <Button
               disabled={buttonsDisabled || winsY === 0 || playerY.name === ""}
               onClick={e => changeWins(e, "y")}
+              className={classes.button}
             >
               -
             </Button>
@@ -127,4 +137,4 @@ BracketItem.defaultProps = {
   bestOf: 5
 };
 
-export default withStyles(styles)(BracketItem);
+export default withTheme(withStyles(styles)(BracketItem));

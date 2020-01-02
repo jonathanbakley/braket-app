@@ -12,7 +12,12 @@ const styles = {
   }
 };
 
-const RibbonTop = ({ setPlayersArray, playersArray, classes }) => {
+const RibbonTop = ({
+  setPlayersArray,
+  playersArray,
+  classes,
+  setBestOutOf
+}) => {
   const [numberOfPlayers, setNumPlayers] = React.useState(0);
 
   const onInputChange = event => {
@@ -28,13 +33,28 @@ const RibbonTop = ({ setPlayersArray, playersArray, classes }) => {
       const playersArrayBuilder = [...Array(parseInt(event.target.value, 10))];
       const newPlayersArray = playersArrayBuilder.map((player, key) => ({
         id: key,
-        name: "",
+        name: `p${key + 1}`,
         wins: 0,
         stage: 0
       }));
       setPlayersArray(newPlayersArray);
     } else {
       setNumPlayers(0);
+    }
+  };
+
+  const onBestChange = event => {
+    if (
+      event &&
+      event.target &&
+      event.target.value &&
+      event.target.value.length <= 3 &&
+      Number.isInteger(parseInt(event.target.value), 10)
+    ) {
+      if (event.target.value % 2 !== 1) {
+        alert("Number Should Be Odd");
+      }
+      setBestOutOf(event.target.value);
     }
   };
 
@@ -50,6 +70,11 @@ const RibbonTop = ({ setPlayersArray, playersArray, classes }) => {
         label="Number of Players"
         className={classes.input}
         onChange={onInputChange}
+      />
+      <TextField
+        label="Best Out Of"
+        className={classes.input}
+        onChange={onBestChange}
       />
       {[...Array(parseInt(numberOfPlayers, 10) || 0).keys()].map(key => (
         <TextField
