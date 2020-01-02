@@ -15,6 +15,20 @@ const theme = createMuiTheme({
       root: {
         minWidth: "24px"
       }
+    },
+    MuiFormLabel: {
+      root: {
+        "&$focused": {
+          color: "#1976d2"
+        }
+      }
+    },
+    MuiInput: {
+      underline: {
+        "&:after": {
+          borderBottom: "2px solid #1976d2"
+        }
+      }
     }
   }
 });

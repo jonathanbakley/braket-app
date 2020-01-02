@@ -7,7 +7,7 @@ const styles = {
     margin: "5px"
   },
   ribbon: {
-    width: "25%",
+    minWidth: "125px",
     maxWidth: "250px"
   }
 };

@@ -25,7 +25,7 @@ const BracketBase = ({ classes }) => {
   return (
     <div>
       <Typography className={classes.heading} variant="h3">
-        Bracket App
+        Bracket Generator
       </Typography>
       <div className={classes.content}>
         <RibbonTop

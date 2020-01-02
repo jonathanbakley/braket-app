@@ -22,11 +22,15 @@ const styles = {
     borderRadius: "3px"
   },
   entireTable: {
-    padding: "15px",
-    borderCollapse: "separate"
+    display: "block",
+    margin: "15px"
   },
   button: {
     padding: "0px"
+  },
+  tBody: {
+    border: "1px solid #a9a9a9",
+    minWidth: "90px"
   }
 };
 
@@ -38,7 +42,6 @@ const BracketItem = ({
   updatePlayerWins,
   key
 }) => {
-  // TODO: This state will likely need to be made more global
   let [[winsX, winsY], updateWins] = useState([0, 0]);
   let [buttonsDisabled, checkWin] = useState(false);
 
@@ -70,7 +73,7 @@ const BracketItem = ({
   };
   return (
     <Table className={classes.entireTable}>
-      <TableBody>
+      <TableBody className={classes.tBody}>
         <TableRow
           className={classNames({
             [classes.winner]: winsX >= Math.ceil(bestOf / 2)
