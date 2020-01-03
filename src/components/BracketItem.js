@@ -23,14 +23,23 @@ const styles = {
   },
   entireTable: {
     display: "block",
-    margin: "15px"
+    margin: "15px",
+    width: "auto",
+    borderRadius: "6px",
+    overflow: "hidden",
+    border: "1px solid #a9a9a9"
   },
   button: {
     padding: "0px"
   },
   tBody: {
-    border: "1px solid #a9a9a9",
     minWidth: "90px"
+  },
+  bottomRow: {
+    borderTop: "1px solid #a9a9a9"
+  },
+  nameLabel: {
+    width: "100%"
   }
 };
 
@@ -79,7 +88,7 @@ const BracketItem = ({
             [classes.winner]: winsX >= Math.ceil(bestOf / 2)
           })}
         >
-          <TableCell>{playerX.name}</TableCell>
+          <TableCell className={classes.nameLabel}>{playerX.name}</TableCell>
           <TableCell>{winsX}</TableCell>
           <TableCell className={classes.buttons}>
             <Button
@@ -99,11 +108,11 @@ const BracketItem = ({
           </TableCell>
         </TableRow>
         <TableRow
-          className={classNames({
+          className={classNames(classes.bottomRow, {
             [classes.winner]: winsY >= Math.ceil(bestOf / 2)
           })}
         >
-          <TableCell>{playerY.name}</TableCell>
+          <TableCell className={classes.nameLabel}>{playerY.name}</TableCell>
           <TableCell>{winsY}</TableCell>
           <TableCell className={classes.buttons}>
             <Button
