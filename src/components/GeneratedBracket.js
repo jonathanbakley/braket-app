@@ -68,7 +68,7 @@ const GeneratedBracket = ({ players, setPlayersArray, bestOf, classes }) => {
                   position={position}
                   playerX={playerX ? playerX : { name: "" }}
                   playerY={playerY ? playerY : { name: "" }}
-                  bestOf={bestOf}
+                  bestOf={parseInt(bestOf, 10)}
                   updatePlayerWins={updatePlayerWins}
                 />
               );

@@ -13,8 +13,9 @@ const styles = {
   heading: {
     textAlign: "center",
     backgroundColor: "#1976d2",
-    height: "56px",
-    color: "white"
+    height: "54px",
+    color: "white",
+    boxShadow: "0 5px 6px #a9a9a9"
   }
 };
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import classNames from "classnames";
 
@@ -52,15 +52,6 @@ const BracketItem = ({
   key
 }) => {
   let [[winsX, winsY], updateWins] = useState([0, 0]);
-  let [buttonsDisabled, checkWin] = useState(false);
-
-  useEffect(() => {
-    const xWon = winsX >= Math.ceil(bestOf / 2);
-    const yWon = winsY >= Math.ceil(bestOf / 2);
-    if (xWon || yWon) {
-      checkWin(true);
-    }
-  }, [bestOf, winsX, winsY]);
 
   const changeWins = (event, player) => {
     const text = event.target.textContent;
@@ -92,14 +83,14 @@ const BracketItem = ({
           <TableCell>{winsX}</TableCell>
           <TableCell className={classes.buttons}>
             <Button
-              disabled={buttonsDisabled || playerX.name === ""}
+              disabled={playerX.name === "" || winsX >= Math.ceil(bestOf / 2)}
               onClick={e => changeWins(e, "x")}
               className={classes.button}
             >
               +
             </Button>
             <Button
-              disabled={buttonsDisabled || winsX === 0 || playerX.name === ""}
+              disabled={winsX === 0 || playerX.name === ""}
               onClick={e => changeWins(e, "x")}
               className={classes.button}
             >
@@ -116,14 +107,14 @@ const BracketItem = ({
           <TableCell>{winsY}</TableCell>
           <TableCell className={classes.buttons}>
             <Button
-              disabled={buttonsDisabled || playerY.name === ""}
+              disabled={playerY.name === "" || winsY >= Math.ceil(bestOf / 2)}
               onClick={e => changeWins(e, "y")}
               className={classes.button}
             >
               +
             </Button>
             <Button
-              disabled={buttonsDisabled || winsY === 0 || playerY.name === ""}
+              disabled={winsY === 0 || playerY.name === ""}
               onClick={e => changeWins(e, "y")}
               className={classes.button}
             >
@@ -146,7 +137,7 @@ BracketItem.propTypes = {
 };
 
 BracketItem.defaultProps = {
-  bestOf: 5
+  bestOf: 3
 };
 
 export default withTheme(withStyles(styles)(BracketItem));

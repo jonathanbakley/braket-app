@@ -12,6 +12,16 @@ const styles = {
   }
 };
 
+const checkEventForNumber = event => {
+  return (
+    event &&
+    event.target &&
+    event.target.value &&
+    event.target.value.length <= 3 &&
+    Number.isInteger(parseInt(event.target.value), 10)
+  );
+};
+
 const RibbonTop = ({
   setPlayersArray,
   playersArray,
@@ -21,15 +31,8 @@ const RibbonTop = ({
   const [numberOfPlayers, setNumPlayers] = React.useState(0);
 
   const onInputChange = event => {
-    if (
-      event &&
-      event.target &&
-      event.target.value &&
-      event.target.value.length <= 3 &&
-      Number.isInteger(parseInt(event.target.value), 10)
-    ) {
+    if (checkEventForNumber(event)) {
       setNumPlayers(event.target.value);
-      // setPlayersArray(new Array(parseInt(event.target.value, 10)));
       const playersArrayBuilder = [...Array(parseInt(event.target.value, 10))];
       const newPlayersArray = playersArrayBuilder.map((player, key) => ({
         id: key,
@@ -44,13 +47,7 @@ const RibbonTop = ({
   };
 
   const onBestChange = event => {
-    if (
-      event &&
-      event.target &&
-      event.target.value &&
-      event.target.value.length <= 3 &&
-      Number.isInteger(parseInt(event.target.value), 10)
-    ) {
+    if (checkEventForNumber(event)) {
       if (event.target.value % 2 !== 1) {
         alert("Number Should Be Odd");
       }
