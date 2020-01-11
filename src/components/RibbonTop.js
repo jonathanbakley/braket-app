@@ -26,7 +26,8 @@ const RibbonTop = ({
   setPlayersArray,
   playersArray,
   classes,
-  setBestOutOf
+  setBestOutOf,
+  bestOf
 }) => {
   const [numberOfPlayers, setNumPlayers] = React.useState(0);
 
@@ -34,12 +35,26 @@ const RibbonTop = ({
     if (checkEventForNumber(event)) {
       setNumPlayers(event.target.value);
       const playersArrayBuilder = [...Array(parseInt(event.target.value, 10))];
+      let braketSize = 1;
+      while (braketSize < event.target.value) {
+        braketSize = braketSize * 2;
+      }
+      // create players array with a temporary name and alternatig id
       const newPlayersArray = playersArrayBuilder.map((player, key) => ({
-        id: key,
+        id: key >= braketSize / 2 ? (key - braketSize / 2) * 2 + 1 : key * 2,
         name: `p${key + 1}`,
         wins: 0,
         stage: 0
       }));
+      // populate wins for players with a bye game
+      for (
+        let k = braketSize / 2 - (braketSize - event.target.value);
+        k < braketSize / 2;
+        k++
+      ) {
+        newPlayersArray[k].wins = Math.ceil(bestOf / 2);
+      }
+
       setPlayersArray(newPlayersArray);
     } else {
       setNumPlayers(0);

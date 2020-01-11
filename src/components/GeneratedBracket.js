@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import BracketItem from "./BracketItem";
-import getBraketLayout from "../helpers/getBracketLayout";
+import getBracketLayout from "../helpers/getBracketLayout";
 import { withStyles } from "@material-ui/styles";
 
 const styles = {
@@ -31,7 +31,8 @@ const GeneratedBracket = ({ players, setPlayersArray, bestOf, classes }) => {
     console.log(players);
   };
 
-  const layout = getBraketLayout(players.length); // players.length
+  const layout = getBracketLayout(players.length); // players.length
+
   return (
     <div className={classes.columns}>
       {/* Each Row */}
@@ -45,7 +46,10 @@ const GeneratedBracket = ({ players, setPlayersArray, bestOf, classes }) => {
               let playerY;
               [playerX] = players.filter((player, index) => {
                 const base = position * Math.pow(2, column + 1);
-                if (index >= base && index < base + Math.pow(2, column)) {
+                if (
+                  player.id >= base &&
+                  player.id < base + Math.pow(2, column)
+                ) {
                   return player.wins >= Math.ceil(bestOf / 2) * column;
                 }
                 return false;
@@ -53,8 +57,8 @@ const GeneratedBracket = ({ players, setPlayersArray, bestOf, classes }) => {
               [playerY] = players.filter((player, index) => {
                 const base = position * Math.pow(2, column + 1);
                 if (
-                  index >= base + Math.pow(2, column) &&
-                  index < base + 2 * Math.pow(2, column)
+                  player.id >= base + Math.pow(2, column) &&
+                  player.id < base + 2 * Math.pow(2, column)
                 ) {
                   return player.wins >= Math.ceil(bestOf / 2) * column;
                 }

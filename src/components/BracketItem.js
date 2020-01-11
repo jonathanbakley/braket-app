@@ -10,7 +10,6 @@ import { withStyles } from "@material-ui/styles";
 import { withTheme } from "@material-ui/core/styles";
 import TableBody from "@material-ui/core/TableBody";
 
-// TODO - add more styles
 const styles = {
   buttons: {
     display: "flex",
@@ -83,7 +82,11 @@ const BracketItem = ({
           <TableCell>{winsX}</TableCell>
           <TableCell className={classes.buttons}>
             <Button
-              disabled={playerX.name === "" || winsX >= Math.ceil(bestOf / 2)}
+              disabled={
+                playerX.name === "" ||
+                winsX >= Math.ceil(bestOf / 2) ||
+                winsY >= Math.ceil(bestOf / 2)
+              }
               onClick={e => changeWins(e, "x")}
               className={classes.button}
             >
@@ -107,7 +110,11 @@ const BracketItem = ({
           <TableCell>{winsY}</TableCell>
           <TableCell className={classes.buttons}>
             <Button
-              disabled={playerY.name === "" || winsY >= Math.ceil(bestOf / 2)}
+              disabled={
+                playerY.name === "" ||
+                winsY >= Math.ceil(bestOf / 2) ||
+                winsX >= Math.ceil(bestOf / 2)
+              }
               onClick={e => changeWins(e, "y")}
               className={classes.button}
             >

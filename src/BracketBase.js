@@ -33,6 +33,7 @@ const BracketBase = ({ classes }) => {
           setPlayersArray={setPlayersArray}
           playersArray={playersArray}
           setBestOutOf={setBestOutOf}
+          bestOf={bestOf}
         />
         <GeneratedBracket
           players={playersArray}
