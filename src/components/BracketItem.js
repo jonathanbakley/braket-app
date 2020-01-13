@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import classNames from "classnames";
 
@@ -48,10 +48,10 @@ const BracketItem = ({
   playerY,
   bestOf,
   updatePlayerWins,
-  key
+  winsX,
+  winsY,
+  updateWins
 }) => {
-  let [[winsX, winsY], updateWins] = useState([0, 0]);
-
   const changeWins = (event, player) => {
     const text = event.target.textContent;
     if (player === "x") {

@@ -5,6 +5,6 @@
 5. Menu Features - Number of players and number of wins in each cell. (DONE)
 
 6. Add better styling for bracket items
-7. Figure out a solution for non standard brackets
+7. Figure out a solution for non standard brackets (DONE)
 8. Make sure all components have proptypes and default props
 9. lines between braket items???

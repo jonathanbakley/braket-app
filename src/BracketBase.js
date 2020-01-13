@@ -20,8 +20,12 @@ const styles = {
 };
 
 const BracketBase = ({ classes }) => {
-  const [playersArray, setPlayersArray] = React.useState([]);
-  const [bestOf, setBestOutOf] = React.useState(3);
+  const [playersArray, setPlayersArray] = React.useState(
+    JSON.parse(window.sessionStorage.getItem("bracket")) || []
+  );
+  const [bestOf, setBestOutOf] = React.useState(
+    parseInt(window.sessionStorage.getItem("bestOutOf"), 10) || null
+  );
 
   return (
     <div>
@@ -38,7 +42,7 @@ const BracketBase = ({ classes }) => {
         <GeneratedBracket
           players={playersArray}
           setPlayersArray={setPlayersArray}
-          bestOf={bestOf}
+          bestOf={bestOf || 3}
         />
       </div>
     </div>

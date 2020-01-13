@@ -1,6 +1,7 @@
 import React from "react";
 import TextField from "@material-ui/core/TextField";
 import { withStyles } from "@material-ui/core/styles";
+import { Button } from "@material-ui/core";
 
 const styles = {
   input: {
@@ -9,6 +10,12 @@ const styles = {
   ribbon: {
     minWidth: "125px",
     maxWidth: "250px"
+  },
+  resetButton: {
+    width: "125px",
+    margin: "25px",
+    background: "#1976d2",
+    color: "white"
   }
 };
 
@@ -29,7 +36,12 @@ const RibbonTop = ({
   setBestOutOf,
   bestOf
 }) => {
-  const [numberOfPlayers, setNumPlayers] = React.useState(0);
+  const bracketLengthFromSession =
+    JSON.parse(window.sessionStorage.getItem("bracket")) &&
+    JSON.parse(window.sessionStorage.getItem("bracket")).length;
+  const [numberOfPlayers, setNumPlayers] = React.useState(
+    bracketLengthFromSession || 0
+  );
 
   const onInputChange = event => {
     if (checkEventForNumber(event)) {
@@ -47,6 +59,9 @@ const RibbonTop = ({
         stage: 0
       }));
       // populate wins for players with a bye game
+      if (bestOf === "") {
+        bestOf = 3;
+      }
       for (
         let k = braketSize / 2 - (braketSize - event.target.value);
         k < braketSize / 2;
@@ -54,10 +69,13 @@ const RibbonTop = ({
       ) {
         newPlayersArray[k].wins = Math.ceil(bestOf / 2);
       }
-
+      window.sessionStorage.setItem("bracket", JSON.stringify(newPlayersArray));
       setPlayersArray(newPlayersArray);
     } else {
       setNumPlayers(0);
+    }
+    if (event.target.value === "") {
+      setPlayersArray([]);
     }
   };
 
@@ -66,13 +84,26 @@ const RibbonTop = ({
       if (event.target.value % 2 !== 1) {
         alert("Number Should Be Odd");
       }
+      window.sessionStorage.setItem("bestOutOf", event.target.value);
       setBestOutOf(event.target.value);
+    }
+    if (event.target.value === "") {
+      setBestOutOf("");
     }
   };
 
   const onNameInput = (event, key) => {
     playersArray[key].name = event.target.value;
+    window.sessionStorage.setItem("bracket", JSON.stringify([...playersArray]));
     setPlayersArray([...playersArray]);
+  };
+
+  const resetBracket = () => {
+    setPlayersArray([]);
+    window.sessionStorage.removeItem("bracket");
+    window.sessionStorage.removeItem("bestOutOf");
+    setNumPlayers(0);
+    setBestOutOf("");
   };
 
   return (
@@ -82,20 +113,26 @@ const RibbonTop = ({
         label="Number of Players"
         className={classes.input}
         onChange={onInputChange}
+        value={playersArray.length || ""}
       />
       <TextField
         label="Best Out Of"
         className={classes.input}
         onChange={onBestChange}
+        value={bestOf || ""}
       />
       {[...Array(parseInt(numberOfPlayers, 10) || 0).keys()].map(key => (
         <TextField
           label={`Player ${key + 1}`}
           className={classes.input}
           key={key}
+          value={(playersArray[key] && playersArray[key].name) || ""}
           onChange={event => onNameInput(event, key)}
         />
       ))}
+      <Button className={classes.resetButton} onClick={resetBracket}>
+        Reset
+      </Button>
     </div>
   );
 };

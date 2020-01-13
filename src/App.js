@@ -13,7 +13,11 @@ const theme = createMuiTheme({
     },
     MuiButton: {
       root: {
-        minWidth: "24px"
+        minWidth: "24px",
+        "&:hover": {
+          opacity: "0.7",
+          backgroundColor: "#1976d2"
+        }
       }
     },
     MuiFormLabel: {
