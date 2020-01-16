@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import PropTypes from "prop-types";
 import BracketItem from "./BracketItem";
 import getBracketLayout from "../helpers/getBracketLayout";
 import { withStyles } from "@material-ui/styles";
@@ -102,6 +103,22 @@ const GeneratedBracket = ({ players, setPlayersArray, bestOf, classes }) => {
       })}
     </div>
   );
+};
+
+GeneratedBracket.propTypes = {
+  players: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number,
+      name: PropTypes.string,
+      wins: PropTypes.number
+    })
+  ),
+  setPlayersArray: PropTypes.func,
+  bestOf: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  classes: PropTypes.shape({
+    columns: PropTypes.string,
+    column: PropTypes.string
+  })
 };
 
 export default withStyles(styles)(GeneratedBracket);

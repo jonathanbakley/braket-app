@@ -9,38 +9,7 @@ import Button from "@material-ui/core/Button";
 import { withStyles } from "@material-ui/styles";
 import { withTheme } from "@material-ui/core/styles";
 import TableBody from "@material-ui/core/TableBody";
-
-const styles = {
-  buttons: {
-    display: "flex",
-    flexDirection: "column",
-    padding: "0px"
-  },
-  winner: {
-    backgroundColor: "#a9a9a9",
-    borderRadius: "3px"
-  },
-  entireTable: {
-    display: "block",
-    margin: "15px",
-    width: "auto",
-    borderRadius: "6px",
-    overflow: "hidden",
-    border: "1px solid #a9a9a9"
-  },
-  button: {
-    padding: "0px"
-  },
-  tBody: {
-    minWidth: "90px"
-  },
-  bottomRow: {
-    borderTop: "1px solid #a9a9a9"
-  },
-  nameLabel: {
-    width: "100%"
-  }
-};
+import { styles } from "./BraketItem.styles";
 
 const BracketItem = ({
   classes,
@@ -70,6 +39,12 @@ const BracketItem = ({
       updatePlayerWins(playerY, text);
     }
   };
+
+  const neededWins = Math.ceil(bestOf / 2);
+  const playerHasNeededWins = winsX >= neededWins || winsY >= neededWins;
+  const plusTopDisabled = playerX.name === "" || playerHasNeededWins;
+  const plusBottomDisabled = playerY.name === "" || playerHasNeededWins;
+
   return (
     <Table className={classes.entireTable}>
       <TableBody className={classes.tBody}>
@@ -82,11 +57,7 @@ const BracketItem = ({
           <TableCell>{winsX}</TableCell>
           <TableCell className={classes.buttons}>
             <Button
-              disabled={
-                playerX.name === "" ||
-                winsX >= Math.ceil(bestOf / 2) ||
-                winsY >= Math.ceil(bestOf / 2)
-              }
+              disabled={plusTopDisabled}
               onClick={e => changeWins(e, "x")}
               className={classes.button}
             >
@@ -110,11 +81,7 @@ const BracketItem = ({
           <TableCell>{winsY}</TableCell>
           <TableCell className={classes.buttons}>
             <Button
-              disabled={
-                playerY.name === "" ||
-                winsY >= Math.ceil(bestOf / 2) ||
-                winsX >= Math.ceil(bestOf / 2)
-              }
+              disabled={plusBottomDisabled}
               onClick={e => changeWins(e, "y")}
               className={classes.button}
             >
@@ -136,11 +103,32 @@ const BracketItem = ({
 
 BracketItem.propTypes = {
   classes: PropTypes.shape({
-    buttons: PropTypes.string
+    buttons: PropTypes.string,
+    button: PropTypes.string,
+    winner: PropTypes.string,
+    entireTable: PropTypes.string,
+    tBody: PropTypes.string,
+    bottomRow: PropTypes.string,
+    nameLabel: PropTypes.string
   }),
-  // playerX: PropTypes.object,
-  // playerY: PropTypes.object,
-  bestOf: PropTypes.number
+  // Player in top spot
+  playerX: PropTypes.shape({
+    name: PropTypes.string
+  }),
+  // Player in bottom spot
+  playerY: PropTypes.shape({
+    name: PropTypes.string
+  }),
+  // number of games total (best out of 7)
+  bestOf: PropTypes.number,
+  // Function to update number of wins for a player
+  updatePlayerWins: PropTypes.func,
+  // wins to display in this item for top player
+  winsX: PropTypes.number,
+  // wins to display in this item for bottom player
+  winsY: PropTypes.number,
+  // function to update wins state.
+  updateWins: PropTypes.func
 };
 
 BracketItem.defaultProps = {
