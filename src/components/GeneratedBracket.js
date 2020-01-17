@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import BracketItem from "./BracketItem";
 import getBracketLayout from "../helpers/getBracketLayout";
@@ -15,8 +15,6 @@ const styles = {
 };
 
 const GeneratedBracket = ({ players, setPlayersArray, bestOf, classes }) => {
-  let [[playerXWins, playerYWins], updateWins] = useState([0, 0]);
-
   const updatePlayerWins = (playerToUpdate, plusOrMinus) => {
     players = players.map(player => {
       if (player.name === playerToUpdate.name) {
@@ -63,26 +61,6 @@ const GeneratedBracket = ({ players, setPlayersArray, bestOf, classes }) => {
                 return false;
               });
 
-              const totalWins = winsNeeded * (column + 1);
-              let pXWins = 0;
-              let pYWins = 0;
-              if (playerX) {
-                pXWins =
-                  playerX.wins > totalWins
-                    ? winsNeeded
-                    : playerX.wins - winsNeeded * column > 0
-                    ? playerX.wins - winsNeeded * column
-                    : 0;
-              }
-              if (playerY) {
-                pYWins =
-                  playerY.wins > totalWins
-                    ? winsNeeded
-                    : playerY.wins - winsNeeded * column > 0
-                    ? playerY.wins - winsNeeded * column
-                    : 0;
-              }
-
               return (
                 <BracketItem
                   column={column}
@@ -90,9 +68,6 @@ const GeneratedBracket = ({ players, setPlayersArray, bestOf, classes }) => {
                   position={position}
                   playerX={playerX ? playerX : { name: "" }}
                   playerY={playerY ? playerY : { name: "" }}
-                  winsX={pXWins}
-                  winsY={pYWins}
-                  updateWins={updateWins}
                   bestOf={parseInt(bestOf, 10)}
                   updatePlayerWins={updatePlayerWins}
                 />

@@ -17,10 +17,10 @@ const BracketItem = ({
   playerY,
   bestOf,
   updatePlayerWins,
-  winsX,
-  winsY,
-  updateWins
+  column
 }) => {
+  let [[winsX, winsY], updateWins] = React.useState([0, 0]);
+
   const changeWins = (event, player) => {
     const text = event.target.textContent;
     if (player === "x") {
@@ -44,6 +44,25 @@ const BracketItem = ({
   const playerHasNeededWins = winsX >= neededWins || winsY >= neededWins;
   const plusTopDisabled = playerX.name === "" || playerHasNeededWins;
   const plusBottomDisabled = playerY.name === "" || playerHasNeededWins;
+
+  // logic to determine number of wins to display in x and y player spots
+  const totalWins = neededWins * (column + 1);
+  if (playerX.name !== "") {
+    winsX =
+      playerX.wins > totalWins
+        ? neededWins
+        : playerX.wins - neededWins * column > 0
+        ? playerX.wins - neededWins * column
+        : 0;
+  }
+  if (playerY.name !== "") {
+    winsY =
+      playerY.wins > totalWins
+        ? neededWins
+        : playerY.wins - neededWins * column > 0
+        ? playerY.wins - neededWins * column
+        : 0;
+  }
 
   return (
     <Table className={classes.entireTable}>
@@ -123,12 +142,7 @@ BracketItem.propTypes = {
   bestOf: PropTypes.number,
   // Function to update number of wins for a player
   updatePlayerWins: PropTypes.func,
-  // wins to display in this item for top player
-  winsX: PropTypes.number,
-  // wins to display in this item for bottom player
-  winsY: PropTypes.number,
-  // function to update wins state.
-  updateWins: PropTypes.func
+  column: PropTypes.number
 };
 
 BracketItem.defaultProps = {
