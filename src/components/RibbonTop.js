@@ -15,7 +15,8 @@ const styles = {
     width: "125px",
     margin: "25px",
     background: "#1976d2",
-    color: "white"
+    color: "white",
+    boxShadow: "1px 2px 3px #a9a9a9"
   }
 };
 
